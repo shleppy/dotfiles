@@ -12,20 +12,13 @@
 # /$ZSH_CUSTOM/plugins      -- plugins
 # /$ZSH_CUSTOM/themes       -- themes
 # /$ZSH_CUSTOM/aliases.zsh  -- aliases
+# etc..
 
 # Path to my oh-my-zsh installation.
 export ZSH="/$HOME/.oh-my-zsh"
 
 # Current zsh theme
 ZSH_THEME="spaceship"
-
-# Plugins
-plugins=(
-	colored-man-pages
-	git
-	zsh-autosuggestions
-    zsh-syntax-highlighting
-)
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
