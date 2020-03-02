@@ -1,3 +1,12 @@
+" Vim Config file
+"        _           
+" __   _(_)_ __ ___  
+" \ \ / / | '_ ` _ \ 
+"  \ V /| | | | | | |
+"   \_/ |_|_| |_| |_|
+"
+" Author Shelby Hendrickx
+
 " Plugins {{{
 " Plugin manager: Vim-Plug
 call plug#begin('$HOME/.vim/plugged')
