@@ -1,4 +1,10 @@
 ## My zshrc
+#          _     
+#  _______| |__  
+# |_  / __| '_ \ 
+#  / /\__ \ | | |
+# /___|___/_| |_|
+#
 ## Author: Shelby Hendrickx
 
 # Custom zsh files locations
@@ -6,9 +12,6 @@
 # /$ZSH_CUSTOM/plugins      -- plugins
 # /$ZSH_CUSTOM/themes       -- themes
 # /$ZSH_CUSTOM/aliases.zsh  -- aliases
-
-# Set Path
-export PATH="/$HOME/.config/composer/vendor/bin:/$HOME/scripts:/$HOME/bin:/$HOME/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 
 # Path to my oh-my-zsh installation.
 export ZSH="/$HOME/.oh-my-zsh"
@@ -23,6 +26,14 @@ plugins=(
 	zsh-autosuggestions
     zsh-syntax-highlighting
 )
+
+# Stash your environment variables in ~/.localrc. This means they'll stay out
+# of your main dotfiles repository (which may be public, like this one), but
+# you'll have access to them in your scripts.
+if [[ -a ~/.localrc ]]
+then
+  source ~/.localrc
+fi
 
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
