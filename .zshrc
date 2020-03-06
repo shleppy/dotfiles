@@ -28,6 +28,10 @@ then
   source ~/.localrc
 fi
 
+# Make sure plugins are loaded before oh-my-zsh
+if [[ -a ~/.oh-my-zsh/custom/plugins-cfg.zsh ]]; then
+  source ~/.oh-my-zsh/custom/plugins-cfg.zsh
+fi
+
 # Load oh-my-zsh
 source $ZSH/oh-my-zsh.sh
-
