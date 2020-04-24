@@ -19,6 +19,7 @@ Plug 'junegunn/fzf', { 'do': './install --bin' }            " file search plugin
 Plug 'junegunn/fzf.vim'                                     " fzf extension for vim (vim extension)
 Plug 'ryanoasis/vim-devicons'                               " file icons (e.g. in nerd tree)
 Plug 'ctrlpvim/ctrlp.vim'                                   " show files and buffers above status bar when searching
+Plug 'dart-lang/dart-vim-plugin'                            " dart syntax highlighting
 call plug#end()
 let g:airline_powerline_fonts = 1                           " enable powerline fonts in status bar
 " }}}

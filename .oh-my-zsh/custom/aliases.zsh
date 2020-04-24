@@ -32,3 +32,7 @@ alias ginit='
 
 # Custom git command for dotfiles 
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# List wifi-channels in order
+alias wifi-channel='iwlist wlp59s0 scan | grep Frequency | sort | uniq -c | sort -n'
+

@@ -18,7 +18,7 @@
 export ZSH="/$HOME/.oh-my-zsh"
 
 # Current zsh theme
-ZSH_THEME="spaceship"
+ZSH_THEME="materialshell"
 
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
