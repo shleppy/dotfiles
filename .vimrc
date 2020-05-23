@@ -29,6 +29,8 @@ Plug 'ryanoasis/vim-devicons'                               " icons, always load
 Plug 'jiangmiao/auto-pairs'                                 " auto pair brackets
 Plug 'tpope/vim-surround'                                   " advanced surrounding text support
 Plug 'dense-analysis/ale'                                   " code linting
+Plug 'rhysd/vim-grammarous'                                 " grammar checking
+Plug 'airblade/vim-gitgutter'                               " git changes in line 
 call plug#end()
 " }}}
 
@@ -39,6 +41,7 @@ set confirm             " display confirmation when closing unsaved file
 let mapleader = ","     " extra key combinations
 set lazyredraw          " don't redraw while executing macros
 set spell spelllang=en_us
+set spellfile=$HOME/.vim/spell/en.utf-8.add
 nmap <leader>w :w!<cr>
 "}}}
 
@@ -68,8 +71,6 @@ set tabstop=4           " number of visual spaces per TAB
 " UI Config {{{
 filetype indent on      " load filetype-specific indent files
 set cursorline          " highlight current line
-set number              " show line numbers
-set relativenumber      " show relative line numbers by default
 set showcmd             " show command in bottom bar
 set showmatch           " highlight matching [{(){]
 set wildmenu            " visual autocomplete menu for commands
@@ -77,6 +78,13 @@ set noerrorbells        " disable beep on errors
 set mouse=a             " enable mouse for scrolling and resizing (also won't copy line numbers)
 set title               " set window's title to current file
 set foldcolumn=1        " extra margin on left
+" set relative line number and line number depending on mode
+set number relativenumber 
+:augroup numbertoggle
+:  autocmd!
+:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+:augroup END
 " }}}
                        
 " Text Rendering {{{
@@ -109,6 +117,9 @@ nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>  
 " }}}
 
 " Nerdtree {{{
@@ -125,6 +136,8 @@ let NERDTreeRespectWildIgnore=1
 
 " Airline {{{
 let g:airline_theme='molokai'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 " }}}
 
 " YouCompleteMe {{{
