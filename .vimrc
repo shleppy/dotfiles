@@ -1,9 +1,9 @@
 " Vim Config file
 "        _           
-" _   _()_ _ __  
+" __   _(_)_ __ ___  
 " \ \ / / | '_ ` _ \ 
 "  \ V /| | | | | | |
-"   \_/ ||| || ||
+"   \_/ |_|_| |_| |_|
 "
 " Author Shelby Hendrickx
 
@@ -35,15 +35,31 @@ call plug#end()
 " }}}
 
 " Global {{{
-set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.DS_Store,*.min.*,*.aux,*.fls,*.lof,*.lot,*.fdb_latexmk
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.DS_Store,*.min.*,*.aux,*.fls,*.lof,*.lot,*.fdb_latexmk,*.bcf,*.blg,*.bbl,
 set noswapfile          " disable swap files
 set confirm             " display confirmation when closing unsaved file
-let mapleader = ","     " extra key combinations
+noremap <Space> <Nop>   
+let mapleader = "\<Space>"     " extra key combinations
 set lazyredraw          " don't redraw while executing macros
+" spelling
 set spell spelllang=en_us
 set spellfile=$HOME/.vim/spell/en.utf-8.add
+nnoremap <Leader>fs 1z=
+" map leader + w to write 
 nmap <leader>w :w!<cr>
-"}}}
+" map leader copy paste to clipboard
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
+" map leader + f to open fzf
+nnoremap <silent> <leader>f :FZF<cr>
+nnoremap <silent> <leader>F :FZF ~<cr>
+" set semicolon to current line without moving cursor
+nnoremap <Leader>; m'A;<ESC>`'
+" quickly open vimrc
+nnoremap <Leader>rc :e $MYVIMRC<CR>
+" }}}
 
 " Colors {{{
 colorscheme molokai 
@@ -98,6 +114,7 @@ set si                  " smart indent
 
 " Searching {{{
 set hlsearch            " highlight search matches
+" }}}
 
 " Movement {{{
 " Map move to beginning of line to B
@@ -108,15 +125,12 @@ nnoremap E $
 nnoremap ^ <nop>
 " map $ to nothing
 nnoremap $ <nop>
-" map search files to ;
-map ; :Files<CR>
-" map toggle nerd tree to <ctrl+o>
-map <C-o> :NERDTreeToggle<CR>
-" Move line wilt alt + [jk]
+" Move line with alt + [jk]
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+" switching and closing buffers
 map gn :bn<cr>
 map gp :bp<cr>
 map gd :bd<cr>  
@@ -129,9 +143,12 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " Show hidden by default
 let NERDTreeShowHidden=1
-" ignore clauses
 " set wildignore
 let NERDTreeRespectWildIgnore=1
+" map toggle nerd tree to <ctrl+o>
+map <C-o> :NERDTreeToggle<CR>
+" toggle nerdtree with leader + t
+nnoremap <leader>t :NERDTreeToggle<CR>
 " }}}
 
 " Airline {{{
