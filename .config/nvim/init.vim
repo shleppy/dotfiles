@@ -90,7 +90,6 @@ nnoremap <A-l> <C-w>l
 " }}}
 
 " Text Rendering {{{
-let display+=lastline       " always try to show paragraph's last line
 set linebreak               " avoid wrapping lines in middle of words
 set wrap                    " line wrapping
 set smartindent             " smart indents
