@@ -7,6 +7,5 @@ plugins=(
     zsh-autosuggestions
     zsh-syntax-highlighting
     ng
+    vi-mode
 )
-
-ARTISAN_OPEN_ON_MAKE_EDITOR=pstorm  # PHPstorm
