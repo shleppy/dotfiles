@@ -2,6 +2,9 @@
 ## 
 ## Author: Shelby Hendrickx
 
+# Alias vim to neovim
+alias vim='nvim'
+
 # Create a new directory and set current dir to the new dir
 alias mkcd='
     foo(){
@@ -10,11 +13,17 @@ alias mkcd='
     };
     foo '
 
-# Open file for editing as superuser
-alias svim='sudo vim '
+# Open file for editing as super user, extra security over sudo vim
+alias svim='sudoedit'
 
-# Update system
-alias update='sudo apt update && sudo apt upgrade'
+# Vimrc opens vimrc  
+alias vimrc='nvim $HOME/.config/nvim/init.vim'
+
+# Zshrc opens zshrc and sources
+alias zshrc='nvim $HOME/.zshrc && source ~/.zshrc'
+
+# System update
+alias pacup='pamac upgrade -a'
 
 # Extract tar files
 alias untar='tar -zxvf '
@@ -35,4 +44,3 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # List wifi-channels in order
 alias wifi-channel='iwlist wlp59s0 scan | grep Frequency | sort | uniq -c | sort -n'
-
