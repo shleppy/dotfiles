@@ -2,7 +2,7 @@
 "                       _           
 "                      (_)          
 "  _ __   ___  _____   ___ _ __ ___  
-" | '_ \ / _ \/ _ \ \ / / | '_ ` _ \ 
+" | '_ \ / _ \/ _ \ \ / / | '_   _ \ 
 " | | | |  __/ (_) \ V /| | | | | | |
 " |_| |_|\___|\___/ \_/ |_|_| |_| |_|
 "
@@ -32,6 +32,10 @@ call plug#end()
 " ============== General Config ============== 
 let mapleader = ";"			" remap leader key to ;
 set spell                   " spell check
+" default wildignore
+set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
+" latex wildignore
+set wildignore+=*.aux,*.bbl,*.bcf,*.blg,*.fls,*.lof,*.lot
 
 " ============== Custom Shortcuts ============== 
 " map leader + w to write 
@@ -129,6 +133,11 @@ if !exists('*ReloadVimrc')
 endif
 autocmd! BufWritePost $MYVIMRC call ReloadVimrc()
 
+" ============== Latex Config ==============
+autocmd FileType tex set updatetime=2000 spell
+autocmd FileType tex autocmd CursorHold,CursorHoldI * silent! wall
+autocmd FileType tex command Compile !urxvt -cd %:p:h -e latexmk % &
+
 " ============== Plugin Config ============== 
 " Airline
 let g:airline_theme='molokai'			    	" airline theme
@@ -142,8 +151,7 @@ let g:deoplete#enable_at_startup = 1
 let g:NERDTreeShowHidden = 1        " show hidden files 
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrows = 1
-let g:NERDTreeIgnore = []
-let g:NERDTreeStatusLine = ''
+let g:NERDTreeRepectWildIgnore=1
 " Open nerd tree on directories
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " Automatically close nvim if NERDTree is only thing left open
