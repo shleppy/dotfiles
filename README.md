@@ -1,7 +1,7 @@
 # Shleppy's Dotfiles
 This repo contains my dotfiles if you couldn't tell from the title.
 
-## installation on new system
+## Installation on new system
 
 Create a fork and do the following:
 
