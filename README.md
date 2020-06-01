@@ -3,6 +3,8 @@ This repo contains my dotfiles if you couldn't tell from the title.
 
 ## installation on new system
 
+Create a fork and do the following:
+
 * Add the following alias to your .bashrc or .zshrc
 > Note: you could rename the alias however you please (e.g. dotfiles)
 ```bash
