@@ -1,4 +1,4 @@
-## This file contains personal aliases.
+## This file contains personal aliases and functions.
 ## 
 ## Author: Shelby Hendrickx
 
