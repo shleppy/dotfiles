@@ -2,8 +2,9 @@
 ## 
 ## Author: Shelby Hendrickx
 
-# Alias vim to neovim
+# Alias vim, e to neovim
 alias vim='nvim'
+alias e='nvim'
 
 # Create a new directory and set current dir to the new dir
 alias mkcd='
@@ -45,3 +46,11 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # List wifi-channels in order
 alias wifi-channel='iwlist wlp59s0 scan | grep Frequency | sort | uniq -c | sort -n'
 
+# Print colors
+function color-test {
+    printf "Colors:\n"
+    for i in {0..255}; 
+        do
+            print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'};
+        done
+}
