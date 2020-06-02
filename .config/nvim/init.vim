@@ -8,7 +8,7 @@
 "
 "" Author Shelby Hendrickx
 
-" Plugins
+" ============== Plugins ============== 
 call plug#begin(stdpath('data') . '/plugged')
 	Plug 'Shougo/deoplete.nvim' 		    " deoplete auto completion
     Plug 'deoplete-plugins/deoplete-jedi'   " deoplete python completion
@@ -36,6 +36,19 @@ set spell                   " spell check
 set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
 " latex wildignore
 set wildignore+=*.aux,*.bbl,*.bcf,*.blg,*.fls,*.lof,*.lot
+set undofile                " store undo across sessions 
+set noswapfile              " disable creating swap file
+set nobackup                " disable saving backups
+set nowritebackup           " disable writing backups
+" Reloads vimrc after saving but keep cursor position
+if !exists('*ReloadVimrc')
+   fun! ReloadVimrc()
+       let save_cursor = getcurpos()
+       source $MYVIMRC
+       call setpos('.', save_cursor)
+   endfun
+endif
+autocmd! BufWritePost $MYVIMRC call ReloadVimrc()
 
 " ============== Custom Shortcuts ============== 
 " map leader + w to write 
@@ -68,11 +81,18 @@ set cursorline		    	" highlight current line
 set mouse=a			        " enable mouse scrolling
 set title 			        " set window's title to current file
 set number relativenumber 	" hybrid numbering
+set foldmethod=syntax       " when folding enable use syntax       
+set colorcolumn=80          " color wrap line number
+set diffopt+=vertical       " always use vertical split for diffs
 :augroup numbertoggle
 :  autocmd!
 :  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
+
+" ============== Searching ==============
+set smartcase               " use smartcase search when there is an uppercase
+set ignorecase              " ignore case
 
 " ============== Spaces & Tabs ==============
 set expandtab			    " tabs are spaces
@@ -116,22 +136,14 @@ set splitbelow
 tnoremap <Esc> <C-\><C-n>
 " start terminal in insert mode
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
+" remove line numbers from terminal
+au TermOpen * setlocal nonumber norelativenumber
 " open terminal on ctrl+n
 function! OpenTerminal()
-  split term://bash
+  split term://zsh
   resize 10
 endfunction
 nnoremap <c-n> :call OpenTerminal()<CR>
-
-" Reloads vimrc after saving but keep cursor position
-if !exists('*ReloadVimrc')
-   fun! ReloadVimrc()
-       let save_cursor = getcurpos()
-       source $MYVIMRC
-       call setpos('.', save_cursor)
-   endfun
-endif
-autocmd! BufWritePost $MYVIMRC call ReloadVimrc()
 
 " ============== Latex Config ==============
 autocmd FileType tex set updatetime=2000 spell
@@ -153,9 +165,12 @@ let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeRepectWildIgnore=1
 " Open nerd tree on directories
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && 
+    \ !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene |
+    \ exe 'cd '.argv()[0] | endif
 " Automatically close nvim if NERDTree is only thing left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") &&
+    \ b:NERDTree.isTabTree()) | q | endif
 " Toggle
 nnoremap <silent> <C-o> :NERDTreeToggle<CR>
 " }}}

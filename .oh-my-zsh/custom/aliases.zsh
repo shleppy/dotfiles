@@ -14,6 +14,10 @@ alias mkcd='
     };
     foo '
 
+# Clipboard (e.g. pipe command to clipboard with "echo 'hello world' | c")
+alias c='xclip'
+alias v='xclip -o'
+
 # Open file for editing as super user, extra security over sudo vim
 alias svim='sudoedit'
 
@@ -25,6 +29,10 @@ alias zshrc='nvim $HOME/.zshrc && source ~/.zshrc'
 
 # System update
 alias pacup='pamac upgrade -a'
+alias aptup='sudo apt update && sudo apt upgrade'
+
+# Start tmux with colors
+alias tmux='tmux -2'
 
 # Extract tar files
 alias untar='tar -zxvf '

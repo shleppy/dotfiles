@@ -7,4 +7,5 @@ plugins=(
     zsh-syntax-highlighting
     ng
     vi-mode
+    autojump
 )
