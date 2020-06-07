@@ -1,8 +1,8 @@
 "" Neovim config
-"                       _           
-"                      (_)          
-"  _ __   ___  _____   ___ _ __ ___  
-" | '_ \ / _ \/ _ \ \ / / | '_   _ \ 
+"                       _
+"                      (_)
+"  _ __   ___  _____   ___ _ __ ___
+" | '_ \ / _ \/ _ \ \ / / | '_   _ \
 " | | | |  __/ (_) \ V /| | | | | | |
 " |_| |_|\___|\___/ \_/ |_|_| |_| |_|
 "
@@ -12,12 +12,12 @@
 call plug#begin(stdpath('data') . '/plugged')
 	Plug 'Shougo/deoplete.nvim' 		    " deoplete auto completion
     Plug 'deoplete-plugins/deoplete-jedi'   " deoplete python completion
-	Plug 'dracula/vim'          			" dracula color scheme 
-	Plug 'ryanoasis/vim-devicons'	    	" file icons 
+	Plug 'dracula/vim'          			" dracula color scheme
+	Plug 'ryanoasis/vim-devicons'	    	" file icons
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " fuzzy file search
     Plug 'junegunn/fzf.vim'                 " fuzzy file search in vim
 	Plug 'vim-airline/vim-airline'		    " airline
-    Plug 'vim-airline/vim-airline-themes'	" airline themes 
+    Plug 'vim-airline/vim-airline-themes'	" airline themes
 	Plug 'scrooloose/nerdtree'	        	" nerd tree
     Plug 'scrooloose/nerdcommenter'         " nerd commenting
 	Plug 'tpope/vim-fugitive'		        " git wrapper
@@ -29,22 +29,35 @@ call plug#begin(stdpath('data') . '/plugged')
 	Plug 'rhysd/vim-grammarous'	        	" grammar checking
 call plug#end()
 
-" ============== General Config ============== 
+" ============== General Config ==============
 let mapleader = ";"			" remap leader key to ;
-set spell                   " spell check
+set spell                   " enable spell check
 " default wildignore
 set wildignore+=*.pyc,*.o,*.obj,*.svn,*.swp,*.class,*.hg,*.DS_Store,*.min.*
 " latex wildignore
-set wildignore+=*.aux,*.bbl,*.bcf,*.blg,*.fls,*.lof,*.lot
+set wildignore+=*.aux,*.bbl,*.bcf,*.blg,*.fls,*.lof,*.lot,*.fdb*
+set undofile                " store undo across sessions
+set noswapfile              " disable creating swap file
+set nobackup                " disable saving backups
+set nowritebackup           " disable writing backups
+" reloads vim after saving, keeping cursor position
+if !exists('*ReloadVimrc')
+   fun! ReloadVimrc()
+       let save_cursor = getcurpos()
+       source $MYVIMRC
+       call setpos('.', save_cursor)
+   endfun
+endif
+autocmd! BufWritePost $MYVIMRC call ReloadVimrc()
 
-" ============== Custom Shortcuts ============== 
-" map leader + w to write 
+" ============== Custom Shortcuts ==============
+" map leader + w to write
 nmap <leader>w :w!<cr>
 " map leader copy paste to clipboard
 noremap <Leader>y "*y
 noremap <Leader>p "*p
-noremap <Leader>Y "+y
-noremap <Leader>P "+p
+noremap <Leader>Y "+Y
+noremap <Leader>P "+P
 " map leader + f to open fzf
 nnoremap <silent> <leader>f :FZF<cr>
 nnoremap <silent> <leader>F :FZF ~<cr>
@@ -56,7 +69,7 @@ map <Leader>] :bnext<CR>
 map <Leader>l :buffers list<CR>
 
 " ============== Colors ==============
-" Color scheme 
+" Color scheme
 if (has("termguicolors"))
 	set termguicolors
 endif
@@ -67,6 +80,7 @@ filetype indent on	    	" load filetype-specific indent files
 set cursorline		    	" highlight current line
 set mouse=a			        " enable mouse scrolling
 set title 			        " set window's title to current file
+set colorcolumn=80          " color column at 80 chars
 set number relativenumber 	" hybrid numbering
 :augroup numbertoggle
 :  autocmd!
@@ -74,20 +88,24 @@ set number relativenumber 	" hybrid numbering
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
+" ============== Searching ==============
+set smartcase               " use smartcase search when there is an uppercase
+set ignorecase              " ignore case
+
 " ============== Spaces & Tabs ==============
 set expandtab			    " tabs are spaces
 set shiftround              " round shifting to nearest multiple of shiftwidth
 set shiftwidth=4	    	" when shifting use 4 spaces
 set softtabstop=4	    	" number of spaces in tab when editing
-set tabstop=4		    	" number of visual spaces per tab 
+set tabstop=4		    	" number of visual spaces per tab
 
-" ============== Movement ============== 
+" ============== Movement ==============
 " Map move to beginning of line to B
 nnoremap B ^
 " Map move to end of line to E
 nnoremap E $
 " map ^ to nothing
-nnoremap ^ <nop>  
+nnoremap ^ <nop>
 " map $ to nothing
 nnoremap $ <nop>
 " use alt+hjkl to move between split/vsplit buffers
@@ -103,12 +121,12 @@ nnoremap <A-l> <C-w>l
 nnoremap <C-J> :m+<cr>
 nnoremap <C-k> :m-2<cr>
 
-" ============== Text Rendering ============== 
+" ============== Text Rendering ==============
 set linebreak               " avoid wrapping lines in middle of words
 set wrap                    " line wrapping
 set smartindent             " smart indents
 
-" ============== Neovim settings ============== 
+" ============== Neovim settings ==============
 " open new split panes to right and below
 set splitright
 set splitbelow
@@ -135,10 +153,10 @@ autocmd! BufWritePost $MYVIMRC call ReloadVimrc()
 
 " ============== Latex Config ==============
 autocmd FileType tex set updatetime=2000 spell
-autocmd FileType tex autocmd CursorHold,CursorHoldI * silent! wall
+autocmd! FileType tex autocmd CursorHold,CursorHoldI * silent! wall
 autocmd FileType tex command Compile !urxvt -cd %:p:h -e latexmk % &
 
-" ============== Plugin Config ============== 
+" ============== Plugin Config ==============
 " Airline
 let g:airline_theme='molokai'			    	" airline theme
 let g:airline#extensions#tabline#enabled = 1	" display all buffers
@@ -146,12 +164,21 @@ let g:airline_powerline_fonts = 1		    	" enable powerline font
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" ALE
+let g:ale_lint_on_insert_leave = 1
+let g:ale_fixers = {
+            \    '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \}
+let g:ale_fix_on_save =  1                      " fix files when you save them.
 
 " NERDTree
-let g:NERDTreeShowHidden = 1        " show hidden files 
+let g:NERDTreeShowHidden = 1        " show hidden files
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeDirArrows = 1
-let g:NERDTreeRepectWildIgnore=1
+let g:NERDTreeRespectWildIgnore=1
 " Open nerd tree on directories
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 " Automatically close nvim if NERDTree is only thing left open
